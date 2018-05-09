@@ -1,7 +1,22 @@
 package com.rockpaperscissors.model;
 
-public class ScissorsRule implements Rule {
+import java.util.ArrayList;
 
-    // todo: implement win option
+final public class ScissorsRule extends Rule {
+
+    /**
+     * Handing you the championship
+     *
+     * @return ArrayList<Rule>
+     */
+    public ArrayList<Rule> getLosers() {
+
+        ArrayList<Rule> losers = new ArrayList<Rule>();
+
+        losers.add(new PaperRule());
+
+        return losers;
+
+    }
 
 }

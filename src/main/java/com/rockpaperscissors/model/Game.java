@@ -25,11 +25,36 @@ public class Game {
      *
      * @return Player
      */
-    public Player whoWins() {
+    public ArrayList<Player> whoWins() {
 
-        // todo: implement logic to see who wins with each picked hand
+        ArrayList<Player> winners = this.players;
 
-        return new Player("winner (for now)");
+        if (this.players.get(0).getHand().doesBeat(this.players.get(1).getHand())) {
+
+            winners = new ArrayList<Player>();
+            winners.add(this.players.get(0));
+
+        } else if (this.players.get(1).getHand().doesBeat(this.players.get(0).getHand())) {
+
+            winners = new ArrayList<Player>();
+            winners.add(this.players.get(1));
+
+        }
+
+        // todo: need to implement feature to process multiple (more than 2) players
+
+        return winners;
+
+    }
+
+    /**
+     * Who are they?
+     *
+     * @return ArrayList<Player>
+     */
+    public ArrayList<Player> getPlayers() {
+
+        return this.players;
 
     }
 

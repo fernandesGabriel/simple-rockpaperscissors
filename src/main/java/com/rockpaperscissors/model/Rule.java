@@ -1,7 +1,27 @@
 package com.rockpaperscissors.model;
 
-public interface Rule {
+import java.util.ArrayList;
 
-    // todo: add win options base method and variables
+abstract class Rule implements Winnerable {
+
+    /**
+     * Checks who I can beat
+     *
+     * @param competitor
+     * @return boolean
+     */
+    public boolean doesBeat(Rule competitor) {
+
+        ArrayList<Rule> looserRules = this.getLosers();
+
+        for (Rule rule : looserRules) {
+
+            if (!competitor.getClass().equals(rule.getClass())) return false;
+
+        }
+
+        return true;
+
+    }
 
 }

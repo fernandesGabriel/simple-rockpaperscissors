@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(
         name = "rungame",
@@ -18,7 +22,9 @@ import java.util.ArrayList;
 public class RunGameServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Map<String, Integer> scoreboard = new HashMap<String, Integer>();
 
         // who is playing?
         Player player1 = new Player("Player A");
@@ -35,12 +41,40 @@ public class RunGameServlet extends HttpServlet {
         game.addPlayer(player1);
         game.addPlayer(player2);
 
-        Player winner = game.whoWins();
+        // writing down the scoreboard
+        scoreboard.put("tie", 0);
+        for (Player player : game.getPlayers()) {
 
-        // todo: loop through 100 games and see who is the all time winner and the scores
+            scoreboard.put(player.whoIs(), 0);
+
+        }
+
+        for (int i= 0; i < 100; i++) {
+
+            ArrayList<Player> winners = game.whoWins();
+
+            if (winners.size() == 1) {
+
+                // we have a winner
+                scoreboard.put(winners.get(0).whoIs(), scoreboard.get(winners.get(0).whoIs()) + 1);
+
+            } else if (winners.size() == game.getPlayers().size()) {
+
+                // that is a tie game
+                scoreboard.put("tie", scoreboard.get("tie") + 1);
+
+
+            } else {
+
+                // can more than 2 play? I thing so, let's make it a big group
+                // todo: need to implement feature to process multiple (more than 2) players
+
+            }
+
+        }
 
         // just some boring view code
-        req.setAttribute("winner", winner.whoIs());
+        req.setAttribute("scoreboard", scoreboard);
         RequestDispatcher view = req.getRequestDispatcher("result.jsp");
         view.forward(req, resp);
 
