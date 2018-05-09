@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @WebServlet(
         name = "rungame",
@@ -24,7 +22,7 @@ public class RunGameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Map<String, Integer> scoreboard = new HashMap<String, Integer>();
+        Map<String, Integer> scoreboard = new TreeMap<String, Integer>();
 
         // who is playing?
         Player player1 = new Player("Player A");
@@ -42,14 +40,14 @@ public class RunGameServlet extends HttpServlet {
         game.addPlayer(player2);
 
         // writing down the scoreboard
-        scoreboard.put("tie", 0);
         for (Player player : game.getPlayers()) {
 
             scoreboard.put(player.whoIs(), 0);
 
         }
+        scoreboard.put("tie", 0);
 
-        for (int i= 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
 
             ArrayList<Player> winners = game.whoWins();
 
